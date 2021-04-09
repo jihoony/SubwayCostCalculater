@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @Builder
-public class SubwayCostCalculateResult {
+public class DistanceBaseSubwayCostCalculateResult {
 
     private LocalDate starDate;
     private LocalDate endDate;

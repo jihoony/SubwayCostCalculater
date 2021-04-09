@@ -1,6 +1,6 @@
 package com.myprj.subwaycost.api;
 
-import com.myprj.subwaycost.core.SubwayCostCalculateResult;
+import com.myprj.subwaycost.core.DistanceBaseSubwayCostCalculateResult;
 import com.myprj.subwaycost.service.CalculateService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ class SubwayCostCalculateControllerTest {
     void cal_subwayCost_with_default_cost() throws Exception {
 
         LocalDate startDate = LocalDate.of(2021, 4, 7);
-        SubwayCostCalculateResult mockResult = SubwayCostCalculateResult.builder()
+        DistanceBaseSubwayCostCalculateResult mockResult = DistanceBaseSubwayCostCalculateResult.builder()
                 .starDate(startDate)
                 .endDate(startDate.plusDays(30))
                 .periods(30)
@@ -57,7 +57,7 @@ class SubwayCostCalculateControllerTest {
     void cal_subwayCost_with_given_2050won_cost() throws Exception {
 
         LocalDate startDate = LocalDate.of(2021, 4, 7);
-        SubwayCostCalculateResult mockResult = SubwayCostCalculateResult.builder()
+        DistanceBaseSubwayCostCalculateResult mockResult = DistanceBaseSubwayCostCalculateResult.builder()
                 .starDate(startDate)
                 .endDate(startDate.plusDays(30))
                 .periods(30)
@@ -81,7 +81,7 @@ class SubwayCostCalculateControllerTest {
     void cal_subwayCost_with_given_default_cost_and_additionalOffDays() throws Exception {
 
         LocalDate startDate = LocalDate.of(2021, 4, 7);
-        SubwayCostCalculateResult mockResult = SubwayCostCalculateResult.builder()
+        DistanceBaseSubwayCostCalculateResult mockResult = DistanceBaseSubwayCostCalculateResult.builder()
                 .starDate(startDate)
                 .endDate(startDate.plusDays(30))
                 .periods(30)

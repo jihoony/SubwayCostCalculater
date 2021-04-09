@@ -1,6 +1,6 @@
 package com.myprj.subwaycost.api;
 
-import com.myprj.subwaycost.core.SubwayCostCalculateResult;
+import com.myprj.subwaycost.core.DistanceBaseSubwayCostCalculateResult;
 import com.myprj.subwaycost.service.CalculateService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +25,7 @@ public class SubwayCostCalculateController {
     }
 
     @GetMapping("/date/{yyyyMMdd}")
-    public SubwayCostCalculateResult calculate(
+    public DistanceBaseSubwayCostCalculateResult calculate(
             @PathVariable(name = "yyyyMMdd") String startDateParam,
             @RequestParam(name = "oneWayCost", required = false, defaultValue = "2050") Long oneWayCost,
             @RequestParam(name = "addOffDay", required = false) List<String> additionalOffDaysParam){
@@ -53,7 +53,7 @@ public class SubwayCostCalculateController {
     }
 
     @GetMapping("/recommend")
-    public List<SubwayCostCalculateResult> recommend(
+    public List<DistanceBaseSubwayCostCalculateResult> recommend(
             @RequestParam(name = "oneWayCost", required = false, defaultValue = "2050") Long oneWayCost,
             @RequestParam(name = "distance", required = false, defaultValue = "30") Long distance){
 

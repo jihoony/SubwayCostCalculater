@@ -1,6 +1,5 @@
 package com.myprj.subwaycost.core;
 
-import com.myprj.subwaycost.domain.SubwayDistanceCostRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -9,21 +8,18 @@ import java.util.*;
 
 @Slf4j
 @Component
-public class SubwayCostCalculateImpl implements SubwayCostCalculate {
+public class DistanceBaseSubwayCostCalculateImpl implements SubwayCostCalculate {
 
     public static final long DEFAULT_ONE_WAY_COST = 2_050L;
     private long periodicalCost;
     private long oneWayCost;
     private long twoWayCost;
 
-    private SubwayDistanceCostRepository subwayDistanceCostRepository;
-
     private HashMap<Long, Long> stepCostMap = new HashMap<>();
 
     private BizDaysCalculate bizDaysCalculate;
 
-    public SubwayCostCalculateImpl(SubwayDistanceCostRepository subwayDistanceCostRepository, BizDaysCalculate bizDaysCalculate) {
-        this.subwayDistanceCostRepository = subwayDistanceCostRepository;
+    public DistanceBaseSubwayCostCalculateImpl( BizDaysCalculate bizDaysCalculate) {
         this.bizDaysCalculate = bizDaysCalculate;
 
         initializeStepCostMap();
@@ -71,20 +67,20 @@ public class SubwayCostCalculateImpl implements SubwayCostCalculate {
     }
 
     @Override
-    public SubwayCostCalculateResult calculate(Long oneWayCost, LocalDate startDate, LocalDate endDate, List<LocalDate> holidays, List<LocalDate> additionalOffDays) {
+    public DistanceBaseSubwayCostCalculateResult calculate(Long oneWayCost, LocalDate startDate, LocalDate endDate, List<LocalDate> holidays, List<LocalDate> additionalOffDays) {
         setCost(oneWayCost);
 
         return calculate(startDate, endDate, holidays, additionalOffDays);
     }
 
-    private SubwayCostCalculateResult calculate(LocalDate startDate, LocalDate endDate, List<LocalDate> holidays, List<LocalDate> additionalOffDays){
+    private DistanceBaseSubwayCostCalculateResult calculate(LocalDate startDate, LocalDate endDate, List<LocalDate> holidays, List<LocalDate> additionalOffDays){
 
         BizDayCalculateResult bizDayCalculateResult = bizDaysCalculate.calculate(startDate, endDate, holidays, Optional.ofNullable(additionalOffDays));
 
         long cardCost = getCardCost(bizDayCalculateResult.getBizDays());
         long differenceCost = cardCost - periodicalCost;
 
-        SubwayCostCalculateResult subwayCostCalculateResult = SubwayCostCalculateResult.builder()
+        DistanceBaseSubwayCostCalculateResult distanceBaseSubwayCostCalculateResult = DistanceBaseSubwayCostCalculateResult.builder()
                 .starDate(bizDayCalculateResult.getStarDate())
                 .endDate(bizDayCalculateResult.getEndDate())
                 .periods(bizDayCalculateResult.getPeriods())
@@ -95,7 +91,7 @@ public class SubwayCostCalculateImpl implements SubwayCostCalculate {
                 .differenceCost(differenceCost)
                 .build();
 
-        return subwayCostCalculateResult;
+        return distanceBaseSubwayCostCalculateResult;
     }
 
     private long getCardCost(long bizDays) {

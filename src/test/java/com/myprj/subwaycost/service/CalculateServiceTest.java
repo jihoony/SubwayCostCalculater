@@ -4,7 +4,6 @@ import com.myprj.subwaycost.core.*;
 import com.myprj.subwaycost.domain.Holiday;
 import com.myprj.subwaycost.domain.HolidayRepository;
 import com.myprj.subwaycost.domain.OffDate;
-import com.myprj.subwaycost.domain.SubwayDistanceCostRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -30,9 +29,6 @@ class CalculateServiceTest {
     @Mock
     private HolidayRepository holidayRepository;
 
-    @Mock
-    private SubwayDistanceCostRepository subwayDistanceCostRepository;
-
     private SubwayCostCalculate subwayCostCalculate;
     private BizDaysCalculate bizDaysCalculate;
 
@@ -49,7 +45,7 @@ class CalculateServiceTest {
         MockitoAnnotations.openMocks(this);
 
         bizDaysCalculate = new BizDayCalculateImpl();
-        subwayCostCalculate = new SubwayCostCalculateImpl(subwayDistanceCostRepository, bizDaysCalculate);
+        subwayCostCalculate = new DistanceBaseSubwayCostCalculateImpl(bizDaysCalculate);
         calculateService = new CalculateService(holidayRepository, subwayCostCalculate);
 
         holidays = Arrays.asList(
@@ -71,9 +67,9 @@ class CalculateServiceTest {
 
         given(holidayRepository.findAllByOffDateBetween(convertLocalDateToOffDay(startDate), convertLocalDateToOffDay(endDate))).willReturn(mockHoliday);
 
-        SubwayCostCalculateResult calResult = calculateService.calculate(DEFAULT_COST, startDate, null);
+        DistanceBaseSubwayCostCalculateResult calResult = calculateService.calculate(DEFAULT_COST, startDate, null);
 
-        SubwayCostCalculateResult expectedCost = SubwayCostCalculateResult.builder()
+        DistanceBaseSubwayCostCalculateResult expectedCost = DistanceBaseSubwayCostCalculateResult.builder()
                 .starDate(startDate)
                 .endDate(endDate)
                 .periods(30)
@@ -94,9 +90,9 @@ class CalculateServiceTest {
 
         given(holidayRepository.findAllByOffDateBetween(convertLocalDateToOffDay(startDate), convertLocalDateToOffDay(endDate))).willReturn(mockHoliday);
 
-        SubwayCostCalculateResult calResult = calculateService.calculate(1_200L, startDate, null);
+        DistanceBaseSubwayCostCalculateResult calResult = calculateService.calculate(1_200L, startDate, null);
 
-        SubwayCostCalculateResult expectedCost = SubwayCostCalculateResult.builder()
+        DistanceBaseSubwayCostCalculateResult expectedCost = DistanceBaseSubwayCostCalculateResult.builder()
                 .starDate(startDate)
                 .endDate(endDate)
                 .periods(30)
@@ -117,9 +113,9 @@ class CalculateServiceTest {
 
         given(holidayRepository.findAllByOffDateBetween(convertLocalDateToOffDay(startDate), convertLocalDateToOffDay(endDate))).willReturn(mockHoliday);
 
-        SubwayCostCalculateResult calResult = calculateService.calculate(1_500L, startDate, null);
+        DistanceBaseSubwayCostCalculateResult calResult = calculateService.calculate(1_500L, startDate, null);
 
-        SubwayCostCalculateResult expectedCost = SubwayCostCalculateResult.builder()
+        DistanceBaseSubwayCostCalculateResult expectedCost = DistanceBaseSubwayCostCalculateResult.builder()
                 .starDate(startDate)
                 .endDate(endDate)
                 .periods(30)
@@ -145,9 +141,9 @@ class CalculateServiceTest {
 
         given(holidayRepository.findAllByOffDateBetween(convertLocalDateToOffDay(startDate), convertLocalDateToOffDay(endDate))).willReturn(mockHoliday);
 
-        SubwayCostCalculateResult calResult = calculateService.calculate(DEFAULT_COST, startDate, additionalOffDays);
+        DistanceBaseSubwayCostCalculateResult calResult = calculateService.calculate(DEFAULT_COST, startDate, additionalOffDays);
 
-        SubwayCostCalculateResult expectedCost = SubwayCostCalculateResult.builder()
+        DistanceBaseSubwayCostCalculateResult expectedCost = DistanceBaseSubwayCostCalculateResult.builder()
                 .starDate(startDate)
                 .endDate(endDate)
                 .periods(30)
@@ -171,7 +167,7 @@ class CalculateServiceTest {
         Long loopCnt = 30L;
         generateMockHolidays(loopCnt);
 
-        List<SubwayCostCalculateResult> list = calculateService.recommend(DEFAULT_COST, loopCnt);
+        List<DistanceBaseSubwayCostCalculateResult> list = calculateService.recommend(DEFAULT_COST, loopCnt);
         assertEquals(loopCnt, list.size());
     }
 
@@ -181,7 +177,7 @@ class CalculateServiceTest {
         Long loopCnt = 30L;
         generateMockHolidays(loopCnt);
 
-        List<SubwayCostCalculateResult> list = calculateService.recommend(1_200L, loopCnt);
+        List<DistanceBaseSubwayCostCalculateResult> list = calculateService.recommend(1_200L, loopCnt);
         assertEquals(loopCnt, list.size());
     }
 
@@ -191,7 +187,7 @@ class CalculateServiceTest {
         Long loopCnt = 30L;
         generateMockHolidays(loopCnt);
 
-        List<SubwayCostCalculateResult> list = calculateService.recommend(DEFAULT_COST, 10L);
+        List<DistanceBaseSubwayCostCalculateResult> list = calculateService.recommend(DEFAULT_COST, 10L);
         assertEquals(10, list.size());
     }
 
