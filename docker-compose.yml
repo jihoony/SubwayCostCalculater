@@ -1,0 +1,9 @@
+version: '3'
+services:
+  subway:
+    image: openjdk:8
+    volumes:
+      - ./target/:/tmp/libs
+    ports:
+      - 8080:8080
+    command: bash -c "cd /tmp/libs && java -jar *.jar"
