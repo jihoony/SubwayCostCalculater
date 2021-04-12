@@ -3,10 +3,7 @@ package com.myprj.subwaycost.api;
 import com.myprj.subwaycost.core.DistanceBaseSubwayCostCalculateResult;
 import com.myprj.subwaycost.service.CalculateService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -14,6 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
+@CrossOrigin
 @RestController
 public class SubwayCostCalculateController {
 
