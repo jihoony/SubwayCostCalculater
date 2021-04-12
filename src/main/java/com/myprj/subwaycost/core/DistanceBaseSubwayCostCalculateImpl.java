@@ -81,7 +81,7 @@ public class DistanceBaseSubwayCostCalculateImpl implements SubwayCostCalculate 
         long differenceCost = cardCost - periodicalCost;
 
         DistanceBaseSubwayCostCalculateResult distanceBaseSubwayCostCalculateResult = DistanceBaseSubwayCostCalculateResult.builder()
-                .starDate(bizDayCalculateResult.getStarDate())
+                .startDate(bizDayCalculateResult.getStarDate())
                 .endDate(bizDayCalculateResult.getEndDate())
                 .periods(bizDayCalculateResult.getPeriods())
                 .bizDays(bizDayCalculateResult.getBizDays())

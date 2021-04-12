@@ -70,7 +70,7 @@ class CalculateServiceTest {
         DistanceBaseSubwayCostCalculateResult calResult = calculateService.calculate(DEFAULT_COST, startDate, null);
 
         DistanceBaseSubwayCostCalculateResult expectedCost = DistanceBaseSubwayCostCalculateResult.builder()
-                .starDate(startDate)
+                .startDate(startDate)
                 .endDate(endDate)
                 .periods(30)
                 .bizDays(22)
@@ -93,7 +93,7 @@ class CalculateServiceTest {
         DistanceBaseSubwayCostCalculateResult calResult = calculateService.calculate(1_200L, startDate, null);
 
         DistanceBaseSubwayCostCalculateResult expectedCost = DistanceBaseSubwayCostCalculateResult.builder()
-                .starDate(startDate)
+                .startDate(startDate)
                 .endDate(endDate)
                 .periods(30)
                 .bizDays(22)
@@ -116,7 +116,7 @@ class CalculateServiceTest {
         DistanceBaseSubwayCostCalculateResult calResult = calculateService.calculate(1_500L, startDate, null);
 
         DistanceBaseSubwayCostCalculateResult expectedCost = DistanceBaseSubwayCostCalculateResult.builder()
-                .starDate(startDate)
+                .startDate(startDate)
                 .endDate(endDate)
                 .periods(30)
                 .bizDays(22)
@@ -144,7 +144,7 @@ class CalculateServiceTest {
         DistanceBaseSubwayCostCalculateResult calResult = calculateService.calculate(DEFAULT_COST, startDate, additionalOffDays);
 
         DistanceBaseSubwayCostCalculateResult expectedCost = DistanceBaseSubwayCostCalculateResult.builder()
-                .starDate(startDate)
+                .startDate(startDate)
                 .endDate(endDate)
                 .periods(30)
                 .bizDays(20)

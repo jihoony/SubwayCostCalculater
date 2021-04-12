@@ -10,7 +10,7 @@ import java.util.List;
 @Builder
 public class DistanceBaseSubwayCostCalculateResult {
 
-    private LocalDate starDate;
+    private LocalDate startDate;
     private LocalDate endDate;
     private long periods;
     private long bizDays;

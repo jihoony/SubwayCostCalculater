@@ -33,7 +33,7 @@ class SubwayCostCalculateControllerTest {
 
         LocalDate startDate = LocalDate.of(2021, 4, 7);
         DistanceBaseSubwayCostCalculateResult mockResult = DistanceBaseSubwayCostCalculateResult.builder()
-                .starDate(startDate)
+                .startDate(startDate)
                 .endDate(startDate.plusDays(30))
                 .periods(30)
                 .bizDays(22)
@@ -58,7 +58,7 @@ class SubwayCostCalculateControllerTest {
 
         LocalDate startDate = LocalDate.of(2021, 4, 7);
         DistanceBaseSubwayCostCalculateResult mockResult = DistanceBaseSubwayCostCalculateResult.builder()
-                .starDate(startDate)
+                .startDate(startDate)
                 .endDate(startDate.plusDays(30))
                 .periods(30)
                 .bizDays(22)
@@ -82,7 +82,7 @@ class SubwayCostCalculateControllerTest {
 
         LocalDate startDate = LocalDate.of(2021, 4, 7);
         DistanceBaseSubwayCostCalculateResult mockResult = DistanceBaseSubwayCostCalculateResult.builder()
-                .starDate(startDate)
+                .startDate(startDate)
                 .endDate(startDate.plusDays(30))
                 .periods(30)
                 .bizDays(22)
