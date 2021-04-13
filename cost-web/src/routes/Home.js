@@ -7,21 +7,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 class Home extends React.Component{
 
-    // constructor(props){
-    //     super(props);
-
-    //     this.inputRef = React.createRef();
-    // }
-
     state = {
         isLoading: true,
         items: [],
     };
 
-    getRecommandData = async() => {
-
-        var distance = document.getElementById('distance').value;
-        console.log(distance);
+    getRecommendData = async() => {
 
         const {
             data : items,
@@ -31,27 +22,16 @@ class Home extends React.Component{
     }
 
     componentDidMount(){
-        console.log(process.env.REACT_APP_API_SERVER);
 
-        this.getRecommandData();
+        this.getRecommendData();
     };
 
     render(){
         const {isLoading, items} = this.state;
 
-        console.log(this.state);
-
         return (
             <section className="container">
                 <h1>Recommend Cost</h1>
-
-                <div>
-                    <select id="distance" className="form-select">
-                        <option value="10">10</option>
-                        <option value="20">20</option>
-                        <option selected value="30">30</option>
-                    </select>
-                </div>
 
                 <br/>
                 {isLoading ? (
@@ -69,7 +49,7 @@ class Home extends React.Component{
                                     <th>end date</th>
                                     <th>periods</th>
                                     <th>bizDays</th>
-                                    <th>dirrerence Cost</th>
+                                    <th>difference Cost</th>
                                     <th>card Cost</th>
                                     <th>periodical Cost</th>
                                     <th>holidays</th>
