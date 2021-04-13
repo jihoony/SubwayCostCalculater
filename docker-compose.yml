@@ -3,7 +3,7 @@ services:
   subway:
     image: openjdk:8
     volumes:
-      - ./target/:/tmp/libs
+      - ./costBackEnd/target/:/tmp/libs
     ports:
       - 8080:8080
     command: bash -c "cd /tmp/libs && java -jar *.jar"
