@@ -7,3 +7,14 @@ services:
     ports:
       - 8080:8080
     command: bash -c "cd /tmp/libs && java -jar *.jar"
+  web:
+    image: node:14.16.1
+    volumes:
+      - ./cost-web:/tmp/web
+    ports:
+      - 3000:3000
+    depends_on:
+      - subway
+    environment:
+      - REACT_APP_API_SERVER=http://localhost:8080
+    command: bash -c "cd /tmp/web && npm run start"
