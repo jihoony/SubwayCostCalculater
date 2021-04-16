@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorator="layouts/layout"
+        lang="en"
+>
+<th:block layout:fragment="css"></th:block>
+
+<div layout:fragment="content">
+
+    <div class="container">
+        <div class="row">
+            <h1>Recommend Subway Cost</h1>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="distance">Show Count</label>
+                <select id="distance" class="form-control">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option selected value="30">30</option>
+                </select>
+            </div>
+            <div class="col">
+                <label for="oneWayCost">One Way Cost(won)</label>
+                <select id="oneWayCost" class="form-control">
+                    <option value="1450">1,450</option>
+                    <option value="1550">1,550</option>
+                    <option value="1650">1,650</option>
+                    <option value="1750">1,750</option>
+                    <option value="1850">1,850</option>
+                    <option value="1950">1,950</option>
+                    <option selected value="2050">2,050</option>
+                    <option value="2150">2,150</option>
+                    <option value="2250">2,250</option>
+                    <option value="2350">2,350</option>
+                    <option value="2450">2,450</option>
+                    <option value="2550">2,550</option>
+                    <option value="2650">2,650</option>
+                    <option value="2750">2,750</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <table class="table table-bordered dataTable">
+                <thead>
+                <tr>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Period</th>
+                    <th>Biz Days</th>
+                    <th>Card Cost</th>
+                    <th>Difference Cost</th>
+                    <th>Periodical Cost</th>
+                    <th>Using Count</th>
+                    <th>Holidays</th>
+                </tr>
+                </thead>
+                <tbody id="tblRecommend"/>
+            </table>
+        </div>
+    </div>
+</div>
+
+<th:block layout:fragment="script">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            refreshRecommendTable();
+        });
+
+        $('#distance').change(function(){
+            refreshRecommendTable();
+        });
+        $('#oneWayCost').change(function(){
+            refreshRecommendTable();
+        });
+
+        function refreshRecommendTable() {
+            $('#tblRecommend').empty();
+            getRecommendData();
+        }
+
+        function getRecommendData() {
+
+            const distance = $('#distance').val();
+            const oneWayCost = $('#oneWayCost').val();
+
+            let url = '/recommend';
+            url += '?distance=' + distance;
+            url += '&oneWayCost=' + oneWayCost;
+
+            $.ajax({
+                url: url,
+                success: function (data) {
+                    setRecommendTable(data);
+                },
+                error: function (xhr, status, err) {
+                    console.log(status);
+                    alert(err.message);
+                }
+            });
+        }
+
+        function setRecommendTable(data) {
+            const tbody = $('#tblRecommend');
+
+            $.each(data, function (index, object) {
+                let tr = '<tr>';
+
+                tr += '<td>' + object.startDate + '</td>';
+                tr += '<td>' + object.endDate + '</td>';
+                tr += '<td>' + object.periods + '</td>';
+                tr += '<td>' + object.bizDays + '</td>';
+                tr += '<td>' + addCommas(object.cardCost) + '</td>';
+                tr += '<td>' + addCommas(object.differenceCost) + '</td>';
+                tr += '<td>' + addCommas(object.periodicalCost) + '</td>';
+                tr += '<td>' + object.usingCount + '</td>';
+
+                tr += '<td>' + object.holidays.join(", ") + '</td>';
+
+                tr += '</tr>';
+
+                tbody.append(tr);
+            });
+        }
+
+        function addCommas(nStr) {
+            nStr += '';
+            let x = nStr.split('.');
+            let x1 = x[0];
+            let x2 = x.length > 1 ? '.' + x[1] : '';
+            let rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + ',' + '$2');
+            }
+            return x1 + x2;
+        }
+
+    </script>
+</th:block>
+
+
+</html>
