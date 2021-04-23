@@ -1,0 +1,73 @@
+# logging
+logging:
+  level:
+    com.myprj.subwaycost: debug
+
+# endpoint
+management:
+  endpoint:
+    health:enabled: true
+
+# server
+server:
+  error:
+    whitelabel:
+      enabled: false
+
+####################
+##### profiles #####
+####################
+
+# default profile
+
+spring:
+  application:
+    name: subway
+  datasource:
+    url: jdbc:h2:~/data/subway
+  jpa:
+    generate-ddl: true
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+
+---
+# test profiles
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:h2:mem:testdb
+  jpa:
+    generate-ddl: true
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+
+---
+
+# prod profiles
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST}:3306/${MYSQL_DATABASE}
+    username: ${MYSQL_USER}
+    password: ${MYSQL_PASSWORD}
+  jpa:
+    generate-ddl: true
+    database-platform: org.hibernate.dialect.MariaDB103Dialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true

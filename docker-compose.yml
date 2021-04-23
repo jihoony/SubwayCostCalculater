@@ -1,9 +1,30 @@
 version: '3'
 services:
+  subway-db:
+    image: mariadb:10.4.7
+    env_file: .env
+    volumes:
+      - ~/data/maria/subway:/var/lib/mysql
+    ports:
+      - "13306:3306"
+    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+    healthcheck:
+      test: ['CMD', 'mysqladmin', '-u', 'root', '-p$MYSQL_ROOT_PASSWORD', 'ping']
+      timeout: 10s
+      retries: 10
   subway:
     image: openjdk:8
+    env_file:
+      - .env
     volumes:
       - ./target/:/tmp/libs
     ports:
-      - 80:8080
+      - "80:8080"
     command: bash -c "cd /tmp/libs && java -jar *.jar"
+    depends_on:
+      - subway-db
+    healthcheck:
+      test: "curl --fail --silent localhost:8081/actuator/health | grep UP || exit 1"
+      interval: 20s
+      timeout: 10s
+      retries: 10
