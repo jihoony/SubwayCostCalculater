@@ -14,6 +14,17 @@ server:
     whitelabel:
       enabled: false
 
+
+# openfeign
+feign:
+  server:
+    tago:
+      url: "http://openapi.tago.go.kr/openapi/service/SubwayInfoService"
+      name: "tagoapi"
+
+tago:
+  serviceKey: "YU%2FD%2BRDzNxFxXWtThxBbKkgK7LLuFBp%2BDg4fsgReFFLx4ur4o5PXjFmrEZcmteBS0OqZKdA09ls75oqZamkydw%3D%3D"
+
 ####################
 ##### profiles #####
 ####################
