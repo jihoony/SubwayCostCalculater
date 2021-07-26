@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -47,6 +48,7 @@ public class SubwayInfo {
         List<Item> collect = subwaySttnAcctoSchdulList.getBody().getItems().stream()
                 .filter(item -> isAfterNowTime(nowTime, item))
                 .filter(item -> isMatchStationId(endSubwayStationIds, item))
+                .sorted(Comparator.comparing(item -> item.getDepTime()))
                 .collect(Collectors.toList());
 
         subwaySttnAcctoSchdulList.getBody().setItems(collect);
