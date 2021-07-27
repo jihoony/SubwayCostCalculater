@@ -22,7 +22,7 @@
         <spring-cloud.version>2020.0.2</spring-cloud.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-<!--        <lombok.version>1.18.16</lombok.version>-->
+        <lombok.version>1.18.16</lombok.version>
         <slf4j.api.version>1.7.26</slf4j.api.version>
 
     </properties>
@@ -60,24 +60,11 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
         </dependency>
-
-
-
-        <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-xml</artifactId>
-            <version>2.9.0</version>
-        </dependency>
-
-
 
         <dependency>
             <groupId>org.projectlombok</groupId>
