@@ -1,5 +1,6 @@
 package com.myprj.subwaycost.api;
 
+import com.myprj.subwaycost.api.dto.CommonResponse;
 import com.myprj.subwaycost.core.DistanceBaseSubwayCostCalculateResult;
 import com.myprj.subwaycost.service.CalculateService;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +24,7 @@ public class SubwayCostCalculateController {
     }
 
     @GetMapping("/date/{yyyyMMdd}")
-    public DistanceBaseSubwayCostCalculateResult calculate(
+    public CommonResponse calculate(
             @PathVariable(name = "yyyyMMdd") String startDateParam,
             @RequestParam(name = "oneWayCost", required = false, defaultValue = "2050") Long oneWayCost,
             @RequestParam(name = "addOffDay", required = false) List<String> additionalOffDaysParam){
@@ -33,7 +34,9 @@ public class SubwayCostCalculateController {
         final LocalDate startDate = convertLocalDate(startDateParam);
         final List<LocalDate> additionalOffDays = convertLocalDateList(additionalOffDaysParam);
 
-        return calculateService.calculate(oneWayCost, startDate, additionalOffDays);
+        DistanceBaseSubwayCostCalculateResult calculate = calculateService.calculate(oneWayCost, startDate, additionalOffDays);
+
+        return getCommonResponse(calculate);
     }
 
     private List<LocalDate> convertLocalDateList(List<String> additionalOffDaysParams) {
@@ -51,12 +54,21 @@ public class SubwayCostCalculateController {
     }
 
     @GetMapping("/recommend")
-    public List<DistanceBaseSubwayCostCalculateResult> recommend(
+    public CommonResponse recommend(
             @RequestParam(name = "oneWayCost", required = false, defaultValue = "2050") Long oneWayCost,
             @RequestParam(name = "distance", required = false, defaultValue = "30") Long distance){
 
         log.info("oneWayCost = " + oneWayCost + ", distance = " + distance);
 
-        return calculateService.recommend(oneWayCost, distance);
+        List<DistanceBaseSubwayCostCalculateResult> recommend = calculateService.recommend(oneWayCost, distance);
+
+        return getCommonResponse(recommend);
+    }
+
+    private CommonResponse getCommonResponse(Object object) {
+        return CommonResponse.builder()
+                .success(true)
+                .data(object)
+                .build();
     }
 }

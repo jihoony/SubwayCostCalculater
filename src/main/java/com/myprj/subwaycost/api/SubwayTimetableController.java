@@ -28,13 +28,10 @@ public class SubwayTimetableController {
 
         List<StationInfoResponse> stationInfo = subwayTimetableService.getStationInfo(stationName);
 
-        CommonResponse commonResponse = CommonResponse.builder()
-                .success(true)
-                .data(stationInfo)
-                .build();
-
-        return commonResponse;
+        return getCommonResponse(stationInfo);
     }
+
+
 
     @GetMapping("/table/{stationName}/{id}")
     public CommonResponse getTimetable(@PathVariable String stationName,
@@ -46,12 +43,14 @@ public class SubwayTimetableController {
 
         List<TimetableResponse> timetable = subwayTimetableService.getTimetable(stationName, id, destStationName, targetDate);
 
-        CommonResponse commonResponse = CommonResponse.builder()
-                .success(true)
-                .data(timetable)
-                .build();
+        return getCommonResponse(timetable);
+    }
 
-        return commonResponse;
+    private CommonResponse getCommonResponse(Object object) {
+        return CommonResponse.builder()
+                .success(true)
+                .data(object)
+                .build();
     }
 
     private LocalDateTime getLocalDateTime(String dateTime) {
